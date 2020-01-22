@@ -8,8 +8,10 @@ def register_login
         user[:name] = enter_name
         user[:birthdate] = enter_birthdate
         user[:email] = enter_email
-        binding.pry
+        new_patient = Patient.create(user)
+        puts "You have created an account with the id number #{new_patient.id} "
     elsif user_input == "2"
-        appointment_controller
+        find_patient_id
+    
     end
 end

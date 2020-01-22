@@ -6,7 +6,7 @@ require'pry'
     end
     
     def enter_birthdate
-        puts "enter your birthday!"
+        puts "enter your birthdate!"
         dob_input = gets.chomp
         dob_input
     end
@@ -18,17 +18,3 @@ require'pry'
     end
 
 
-# def invalid_input
-#     puts "invalid input please try again"
-#     if enter_name == nil || enter_name == " "
-#         enter_name
-#     elsif enter_birthdate == nil ||enter_birthdate == " "
-#         enter_birthdate
-#     elsif enter_email == nil || enter_email == " "
-#         enter_email
-#     else
-#         get_user_info
-#     end
-# end
-
-#def create_new_userend

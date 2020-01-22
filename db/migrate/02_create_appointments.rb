@@ -1,4 +1,4 @@
-class CreateAppointments< ActiveRecord::Migration
+class CreateAppointments< ActiveRecord::Migration[5.2]
     def change
       create_table :appointments do |t|
         t.datetime :appt_date
@@ -9,4 +9,3 @@ class CreateAppointments< ActiveRecord::Migration
     end
   end
 
-  #Appointment.create(appt_date: Faker::Date.forward(days:90), duration: Faker::Number.between(from: 10, to: 60),

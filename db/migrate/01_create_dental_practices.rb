@@ -1,4 +1,4 @@
-class CreateDentalPractices < ActiveRecord::Migration
+class CreateDentalPractices < ActiveRecord::Migration[5.2]
     def change
       create_table :dental_practices do |t|
         t.string :name

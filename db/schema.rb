@@ -14,14 +14,14 @@ ActiveRecord::Schema.define(version: 4) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "appt_date"
-    t.integer  "duration"
-    t.integer  "patient_id"
-    t.integer  "dentist_id"
+    t.integer "duration"
+    t.integer "patient_id"
+    t.integer "dentist_id"
   end
 
   create_table "dental_practices", force: :cascade do |t|
-    t.string   "name"
-    t.string   "location"
+    t.string "name"
+    t.string "location"
     t.datetime "opening_time"
     t.datetime "closing_time"
   end
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 4) do
 
   create_table "patients", force: :cascade do |t|
     t.string "name"
-    t.date   "birthdate"
+    t.date "birthdate"
     t.string "email"
   end
 
