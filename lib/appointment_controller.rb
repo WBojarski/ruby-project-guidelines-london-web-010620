@@ -23,10 +23,10 @@ def appointment_options
 end
 
 def view_appointment(id_n)
-    view = Appointment.all.find_by(patient_id: id_n).appt_date
-    view2 = Appointment.all.find_by(patient_id: id_n).dentist.name
-    puts "Your appointment is on: #{view}"
-    puts "Your dentist is: #{view2}"
+    view = Appointment.all.find_by(patient_id: id_n)
+    # view2 = Appointment.all.find_by(patient_id: id_n)
+    puts "Your appointment is on: #{view.appt_date}"
+    puts "Your dentist is: #{view.dentist.name}"
 end
 
 def create_appointment
