@@ -14,9 +14,9 @@ def welcome_message
     
 
     EOF
-    puts CLIColorize.safe_colorize("-------------------------------------------",:red)
-    puts CLIColorize.safe_colorize("Please select one of the following options.",:blue)
-    puts CLIColorize.safe_colorize("-------------------------------------------\n\n",:red)
+    puts CLIColorize.safe_colorize("----------------------------------------------",:red)
+    puts CLIColorize.safe_colorize("We are here to help you 24/7! No pain no gain!",:blue)
+    puts CLIColorize.safe_colorize("----------------------------------------------\n\n",:red)
 end
 
 def run

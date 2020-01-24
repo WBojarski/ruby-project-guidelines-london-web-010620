@@ -1,5 +1,5 @@
 def find_patient_id
-    puts CLIColorize.safe_colorize("enter your name!", :yellow)
+    puts CLIColorize.safe_colorize("Enter your name!", :yellow)
     name_input = gets.chomp
 
     if Patient.find_by(name: name_input)
@@ -14,32 +14,26 @@ end
 
 def appointment_options
     system "clear"
-    
-    puts CLIColorize.safe_colorize("----------------------", :blue)
-    puts CLIColorize.safe_colorize("Appointment Menu      ",:red)
-    puts CLIColorize.safe_colorize("----------------------", :blue)
-    puts CLIColorize.safe_colorize("Please select one of the options below:\n\n", :yellow)
-        puts CLIColorize.safe_colorize("1. View appointment   ", :yellow)
-        puts CLIColorize.safe_colorize("2. Change appointment ", :yellow)
-        puts CLIColorize.safe_colorize("3. Delete appointment ", :yellow)
-        puts CLIColorize.safe_colorize("4. Make appointment   ", :yellow)
-        puts CLIColorize.safe_colorize("5. Exit               ", :yellow)
-    user_input = gets.chomp
-    system "clear"
-    if user_input == "1"
+    prompt = TTY::Prompt.new
+
+    menu_options = ["View appointment", "Change appointment", "Delete appointment", "Make appointment", "Exit"]
+    menu = prompt.select("Select one of the options below:",menu_options, filter: true)
+
+    case menu
+
+    when "View appointment"
         appointments
         end_screen
-    elsif user_input == "2"
+    when "Change appointment"
         update_appointment
-        # end_screen
-    elsif user_input == "3"
-        delete_appointment   
-    elsif user_input == "4"
-        create_appointment  
-    elsif user_input == "5"
-        puts CLIColorize.safe_colorize("Goodbye! ", :green)
+    when "Delete appointment"
+        delete_appointment
+    when "Make appointment"
+        create_appointment
+    when "Exit"
         exit
     end
+
     system "clear"
 
 end
@@ -63,9 +57,29 @@ end
 
 def create_appointment
     system "clear"
+    prompt = TTY::Prompt.new
+    
+    appt1 = Appointment.new(appt_date: Faker::Time.forward(days: 5, period: :morning, format: :long), duration: 30, patient_id: $current_id, dentist_id: Dentist.all.map{|dentist| dentist.id}.sample )
+    appt2 = Appointment.new(appt_date: Faker::Time.forward(days: 10, period: :morning, format: :long), duration: 30, patient_id: $current_id, dentist_id: Dentist.all.map{|dentist| dentist.id}.sample )
+    appt3 = Appointment.new(appt_date: Faker::Time.forward(days: 15, period: :afternoon, format: :long), duration: 30, patient_id: $current_id, dentist_id: Dentist.all.map{|dentist| dentist.id}.sample )
 
-    app_new = Appointment.create(appt_date: Faker::Date.forward(days:5), duration: Faker::Number.between(from: 10, to: 60), patient_id: $current_id, dentist_id: Dentist.all.map{|dentist| dentist.id}.sample )
-    puts CLIColorize.safe_colorize("You have created a new appointment on #{app_new.appt_date}", :green)
+    
+    view_outputs = [appt1[:appt_date], appt2[:appt_date], appt3[:appt_date]]
+    
+    menu = prompt.select("Select from one of the appointments below:", view_outputs, filter: true)
+
+    case menu
+    when appt1.appt_date
+        appt1.save
+    when appt2.appt_date
+        appt2.save
+        
+    when appt3.appt_date
+        appt3.save
+        
+    end
+    
+    puts CLIColorize.safe_colorize("You have created a new appointment on #{menu}", :green)
     end_screen
 end
 
@@ -77,22 +91,38 @@ def delete_appointment
     system "clear"
     array = appts_for_current_user($current_id)
     array[input.to_i - 1].destroy
-    puts CLIColorize.safe_colorize("You have cancelled your appointment. ", :yellow)
-    puts CLIColorize.safe_colorize("Your appointments now are: ", :yellow)
+    puts CLIColorize.safe_colorize("*** You have cancelled your appointment. ***", :red)
+    # puts CLIColorize.safe_colorize("Your appointments now are: ", :yellow)
     appointments
     end_screen
 end
 
+
 def update_appointment
     system "clear"
-
-    view_appointment
-    input = gets.chomp
+    view_appointment #shows current appts
+    input = gets.chomp #appt to change
     system "clear"
     array = appts_for_current_user($current_id)
-    updated_appt = array[input.to_i - 1].update(appt_date: Faker::Date.forward(days:10), duration: Faker::Number.between(from: 10, to: 60), patient_id: $current_id, dentist_id: Dentist.all.map{|dentist| dentist.id}.sample)
-    puts CLIColorize.safe_colorize("You have changed your appointment", :yellow)
+    option1 = Appointment.new(appt_date: Faker::Time.forward(days: 5, period: :morning, format: :long), duration: 30, patient_id: $current_id, dentist_id: Dentist.all.map{|dentist| dentist.id}.sample )
+    option2 = Appointment.new(appt_date: Faker::Time.forward(days: 10, period: :morning, format: :long), duration: 30, patient_id: $current_id, dentist_id: Dentist.all.map{|dentist| dentist.id}.sample )
+    option3 = Appointment.new(appt_date: Faker::Time.forward(days: 15, period: :afternoon, format: :long), duration: 30, patient_id: $current_id, dentist_id: Dentist.all.map{|dentist| dentist.id}.sample )
+    view_outputs = [option1[:appt_date], option2[:appt_date], option3[:appt_date]]
+    puts "Select from one of the appointments below:"
+    view_outputs.each_with_index do |app,i|
+        puts "#{i+1}.#{app} "
+    end
+    user_input2 = gets.chomp #selected appt
+    case user_input2
+    when "1"
+        option1.save
+    when "2"
+        option2.save
+    when "3"
+        option3.save
+    end
+    array[input.to_i - 1].destroy
+    puts CLIColorize.safe_colorize("Appointment successfully updated! These are your current appointments:", :green)
     appointments
     end_screen
-    
 end

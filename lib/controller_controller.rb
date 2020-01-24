@@ -1,16 +1,14 @@
 require"pry"
 def register_login
-    puts CLIColorize.safe_colorize("If you wish to create an account, please enter 1", :yellow)
-    puts CLIColorize.safe_colorize("If you wish to login, please enter 2", :yellow)
-    user_input = gets.chomp
-    if user_input == "1"
+    prompt = TTY::Prompt.new
+    menu_options = ["Login","Register as a new patient"]
+    menu =  prompt.select("How can we help you today",menu_options, filter: true)
+
+    if menu == "Login"
+        find_patient_id
+    elsif menu == "Register as a new patient"
         register
         appointment_options
-    elsif user_input == "2"
-        find_patient_id
-    elsif user_input != (0..2).to_s
-        puts CLIColorize.safe_colorize("Invalid input try again", :red)
-        register_login
     end
 end
 
@@ -25,25 +23,18 @@ end
 
 
 def end_screen
-    puts CLIColorize.safe_colorize("Anything else we can help you with? y/n", :yellow)
-    input = gets.chomp
-    
+    prompt = TTY::Prompt.new
+    # puts CLIColorize.safe_colorize("Anything else we can help you with? y/n", :yellow)
+    # input = gets.chomp
+    menu_options = ["yes","no"]
+    menu =  prompt.select("Anything else we can help you with?",menu_options, filter: true)
 
-    while input == "n" || "no" 
-    case input
-        when (1..1000)
-            puts CLIColorize.safe_colorize("Wrong input", :red)
-        when "yes"
-            appointment_options
-        when "y"
-            appointment_options
-        else
-            exit
-        end
-    end
-   
+    if menu == "yes"
+        appointment_options
+    elsif menu == "no"
+        exit
+    end 
+  
 end
    
-def cls
-    system("cls")
-  end
+
