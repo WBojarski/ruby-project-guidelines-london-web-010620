@@ -1,18 +1,18 @@
-require'pry'
+require"pry"
     def enter_name
-        puts "enter your name!"
+        puts CLIColorize.safe_colorize("enter your name! ", :yellow)
         name_input = gets.chomp
         name_input
     end
     
     def enter_birthdate
-        puts "enter your birthdate!"
+        puts CLIColorize.safe_colorize("enter your birthdate! ", :yellow)
         dob_input = gets.chomp
         dob_input
     end
     
     def enter_email
-        puts "enter your email!"
+        puts CLIColorize.safe_colorize("enter your email! ", :yellow)
         email_input = gets.chomp
         email_input
     end

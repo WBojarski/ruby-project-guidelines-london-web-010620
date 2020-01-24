@@ -1,5 +1,6 @@
 
 require 'bundler'
+require 'cli-colorize'
 
 Bundler.require
 

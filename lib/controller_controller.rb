@@ -1,7 +1,7 @@
-require'pry'
+require"pry"
 def register_login
-    puts "If you wish to create an account, please enter 1"
-    puts "If you wish to login, please enter 2"
+    puts CLIColorize.safe_colorize("If you wish to create an account, please enter 1", :yellow)
+    puts CLIColorize.safe_colorize("If you wish to login, please enter 2", :yellow)
     user_input = gets.chomp
     if user_input == "1"
         register
@@ -9,7 +9,7 @@ def register_login
     elsif user_input == "2"
         find_patient_id
     elsif user_input != (0..2).to_s
-        puts "Invalid input try again" 
+        puts CLIColorize.safe_colorize("Invalid input try again", :red)
         register_login
     end
 end
@@ -20,16 +20,30 @@ def register
     user[:birthdate] = enter_birthdate
     user[:email] = enter_email
     new_patient = Patient.create(user)
-    puts "You have created an account with the id number #{new_patient.id} "
+    puts CLIColorize.safe_colorize("You have created an account with the id number #{new_patient.id}", :green)
 end
 
 
 def end_screen
-    puts "Anything else we can help you with? y/n"
+    puts CLIColorize.safe_colorize("Anything else we can help you with? y/n", :yellow)
     input = gets.chomp
-    while input == "y" || input == "yes" do
-        puts "Anything else we can help you with? y/n"
-        appointment_options
+    
+
+    while input == "n" || "no" 
+    case input
+        when (1..1000)
+            puts CLIColorize.safe_colorize("Wrong input", :red)
+        when "yes"
+            appointment_options
+        when "y"
+            appointment_options
+        else
+            exit
+        end
     end
-    exit
+   
 end
+   
+def cls
+    system("cls")
+  end

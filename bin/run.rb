@@ -1,19 +1,26 @@
-require_relative '../config/environment'
+require_relative "../config/environment"
 
 def welcome_message
+    puts CLIColorize.safe_colorize <<-'EOF'
     
-    puts "Welcome to GHW Dental Practice\n\n"
-    puts "-------------------------------------------"
-    puts "Please select one of the following options."
-    puts "-------------------------------------------\n\n"
+    | |     / ___  / _________  ____ ___  ___     / /_____     / ____/ / / | |     / /
+    | | /| / / _ \/ / ___/ __ \/ __ `__ \/ _ \   / __/ __ \   / / __/ /_/ /| | /| / / 
+    | |/ |/ /  __/ / /__/ /_/ / / / / / /  __/  / /_/ /_/ /  / /_/ / __  / | |/ |/ /  
+    |__/____\___/_/\___/\____/_/ /___/_/____/   \__/\____/   \______/ /_/  |__/|__/   
+       / __ \___  ____  / /_____ _/ /  / __ \_________ ______/ /_(_________           
+      / / / / _ \/ __ \/ __/ __ `/ /  / /_/ / ___/ __ `/ ___/ __/ / ___/ _ \          
+     / /_/ /  __/ / / / /_/ /_/ / /  / ____/ /  / /_/ / /__/ /_/ / /__/  __/          
+    /_____/\___/_/ /_/\__/\__,_/_/  /_/   /_/   \__,_/\___/\__/_/\___/\___/ 
+    
+
+    EOF
+    puts CLIColorize.safe_colorize("-------------------------------------------",:red)
+    puts CLIColorize.safe_colorize("Please select one of the following options.",:blue)
+    puts CLIColorize.safe_colorize("-------------------------------------------\n\n",:red)
 end
 
 def run
-    welcome_message
-    #welcome message
-    register_login
-    #promts user with option 1(new) or 2(login)
-    appointment_options
-    end_screen
+    puts CLIColorize.safe_colorize(welcome_message, :blue)
+    register_login    
 end
 run

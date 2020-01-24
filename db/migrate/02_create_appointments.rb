@@ -9,3 +9,4 @@ class CreateAppointments< ActiveRecord::Migration[5.2]
     end
   end
 
+ Appointment.where(patient_id: 1).map {|a|a.date}
